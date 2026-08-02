@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dyah Fahmi Putri — Portofolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F6F3;
+    --paper:#FBFCFA;
+    --ink:#12202B;
+    --ink-soft:#51626B;
+    --ink-faint:#8B9AA0;
+    --blueprint:#1F5C86;
+    --blueprint-soft:#DCE7ED;
+    --copper:#C97C3D;
+    --line:#D7DCD8;
+    --card:#FFFFFF;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--copper);color:#fff;}
+
+  .wrap{max-width:960px;margin:0 auto;padding:0 32px;}
+
+  /* subtle blueprint grid backdrop */
+  .grid-bg{
+    position:fixed;inset:0;z-index:-1;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:.35;
+    mask-image:linear-gradient(to bottom, black, transparent 85%);
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(245,246,243,.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px;}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;}
+  .logo span{color:var(--copper);}
+  nav ul{list-style:none;display:flex;gap:28px;}
+  nav a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--ink-soft);text-decoration:none;
+    transition:color .2s;
+  }
+  nav a:hover{color:var(--blueprint);}
+  .nav-toggle{display:none;}
+
+  /* ===== HERO ===== */
+  header.hero{padding:96px 0 72px;position:relative;}
+  .status-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;
+    letter-spacing:.06em;color:var(--blueprint);
+    background:var(--blueprint-soft);
+    padding:6px 12px;border-radius:20px;
+    margin-bottom:28px;
+  }
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--copper);
+    box-shadow:0 0 0 3px rgba(201,124,61,.25);}
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(34px,5.5vw,58px);
+    line-height:1.05;
+    letter-spacing:-.01em;
+    max-width:11ch;
+    margin-bottom:20px;
+  }
+  .hero-role{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:19px;font-weight:500;
+    color:var(--blueprint);margin-bottom:18px;
+  }
+  .hero p.lede{max-width:56ch;color:var(--ink-soft);font-size:16px;margin-bottom:32px;}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:0;
+    border-top:1px solid var(--line);
+    margin-top:8px;
+  }
+  .hero-meta div{
+    flex:1;min-width:150px;
+    padding:16px 20px 16px 0;
+    border-right:1px solid var(--line);
+  }
+  .hero-meta div:last-child{border-right:none;}
+  .hero-meta .k{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:4px;}
+  .hero-meta .v{font-size:14px;font-weight:500;}
+
+  /* ===== SECTION HEADERS ===== */
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px;}
+  .sec-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--copper);}
+  .sec-title{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:600;}
+  .sec-sub{color:var(--ink-faint);font-size:13px;font-family:'IBM Plex Mono',monospace;margin-left:auto;}
+
+  /* ===== ABOUT / SPEC SHEET ===== */
+  .spec-sheet{
+    background:var(--card);border:1px solid var(--line);
+  }
+  .spec-row{
+    display:flex;
+    border-bottom:1px solid var(--line);
+  }
+  .spec-row:last-child{border-bottom:none;}
+  .spec-row .k{
+    width:38%;padding:16px 20px;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;
+    color:var(--ink-faint);
+    border-right:1px solid var(--line);
+  }
+  .spec-row .v{padding:16px 20px;font-size:14.5px;}
+  .about-text{color:var(--ink-soft);max-width:60ch;margin-bottom:28px;font-size:15px;}
+
+  /* ===== TIMELINE (trace line) ===== */
+  .timeline{position:relative;padding-left:36px;}
+  .timeline::before{
+    content:'';position:absolute;left:6px;top:6px;bottom:6px;
+    width:1px;background:var(--line);
+  }
+  .t-item{position:relative;padding-bottom:44px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-node{
+    position:absolute;left:-36px;top:4px;
+    width:13px;height:13px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--blueprint);
+  }
+  .t-item.active .t-node{background:var(--copper);border-color:var(--copper);}
+  .t-period{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);margin-bottom:6px;letter-spacing:.04em;text-transform:uppercase;}
+  .t-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin-bottom:4px;}
+  .t-org{font-size:13.5px;color:var(--blueprint);font-weight:500;margin-bottom:10px;}
+  .t-desc{color:var(--ink-soft);font-size:14.5px;max-width:58ch;}
+
+  /* ===== PROJECT CARDS ===== */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+  .proj-card{background:var(--card);padding:26px;display:flex;flex-direction:column;gap:12px;}
+  .proj-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--copper);}
+  .proj-name{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;}
+  .proj-desc{font-size:14px;color:var(--ink-soft);flex:1;}
+  .proj-stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    padding:4px 9px;background:var(--bg);border:1px solid var(--line);color:var(--ink-soft);
+  }
+
+  /* ===== SKILLS ===== */
+  .skill-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 40px;}
+  .skill-group .g-title{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--ink-faint);margin-bottom:12px;
+    padding-bottom:10px;border-bottom:1px solid var(--line);
+  }
+  .skill-group ul{list-style:none;}
+  .skill-group li{
+    font-size:14.5px;padding:7px 0;display:flex;justify-content:space-between;
+    border-bottom:1px dashed var(--line);
+  }
+  .skill-group li:last-child{border-bottom:none;}
+  .skill-group li span.lvl{color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:11px;}
+
+  /* ===== CONTACT ===== */
+  .contact-box{
+    background:var(--ink);color:var(--bg);
+    padding:56px 40px;text-align:left;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+  }
+  .contact-box h2{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600;max-width:16ch;color:#fff;}
+  .contact-box p{color:#B9C4C9;margin-top:10px;max-width:42ch;font-size:14.5px;}
+  .contact-links{display:flex;flex-direction:column;gap:10px;}
+  .contact-links a{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    color:#fff;text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,.25);
+    padding-bottom:2px;width:fit-content;
+    transition:border-color .2s;
+  }
+  .contact-links a:hover{border-color:var(--copper);}
+
+  footer{padding:28px 0 40px;}
+  footer .wrap{display:flex;justify-content:space-between;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (max-width:720px){
+    nav ul{display:none;}
+    .hero-meta div{min-width:100%;border-right:none;border-bottom:1px solid var(--line);}
+    .proj-grid{grid-template-columns:1fr;}
+    .skill-cols{grid-template-columns:1fr;}
+    .spec-row{flex-direction:column;}
+    .spec-row .k{width:100%;border-right:none;border-bottom:1px solid var(--line);}
+    .contact-box{flex-direction:column;align-items:flex-start;}
+    .sec-sub{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">DYAH<span>.</span>FP</div>
+    <ul>
+      <li><a href="#about">Profil</a></li>
+      <li><a href="#experience">Pengalaman</a></li>
+      <li><a href="#projects">Proyek</a></li>
+      <li><a href="#skills">Kompetensi</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="status-tag"><span class="status-dot"></span>TERBUKA UNTUK KERJA PRAKTIK &amp; PELUANG MAGANG</div>
+    <h1>Dyah Fahmi Putri</h1>
+    <div class="hero-role">Teknik Elektro Industri — Sistem Kontrol &amp; Instrumentasi Daya</div>
+    <p class="lede">Mahasiswa D3 Teknik Elektro Industri PENS yang terbiasa bergerak dari perhitungan di kertas ke panel listrik yang sesungguhnya — merancang sistem kontrol berbasis STM32, mensimulasikan jaringan distribusi daya di ETAP, dan kini menjalani kerja praktik langsung di unit pembangkit.</p>
+    <div class="hero-meta">
+      <div><div class="k">Domisili</div><div class="v">Surabaya, Jawa Timur</div></div>
+      <div><div class="k">Almamater</div><div class="v">PENS — Angkatan 2024</div></div>
+      <div><div class="k">Status Saat Ini</div><div class="v">KP di PLN Nusantara Power</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Profil</span>
+      <span class="sec-sub">SPEC-SHEET.TXT</span>
+    </div>
+    <p class="about-text">Fokus belajar dan bekerja di persimpangan sistem tenaga dan sistem tertanam (embedded): merancang rangkaian yang mengelola daya, dan program yang mengelola rangkaian itu. Terbiasa mengerjakan proyek dari nol — mulai dari perhitungan komponen, simulasi, hingga pengujian lapangan.</p>
+    <div class="spec-sheet">
+      <div class="spec-row"><div class="k">PROGRAM STUDI</div><div class="v">D3 Teknik Elektro Industri, Politeknik Elektronika Negeri Surabaya (PENS)</div></div>
+      <div class="spec-row"><div class="k">FOKUS TUGAS AKHIR</div><div class="v">Sistem kincir air tenaga surya dengan pemantauan kualitas air berbasis IoT untuk kolam budidaya ikan — lolos seminar proposal</div></div>
+      <div class="spec-row"><div class="k">KERJA PRAKTIK</div><div class="v">PT PLN Nusantara Power, Unit Pembangkit Brantas — PLTA Wlingi, Blitar (bagian operator)</div></div>
+      <div class="spec-row"><div class="k">MINAT</div><div class="v">Instrumentasi daya, elektronika daya, sistem kendali, IoT untuk pemantauan industri</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Pengalaman</span>
+      <span class="sec-sub">TIMELINE</span>
+    </div>
+    <div class="timeline">
+      <div class="t-item active">
+        <div class="t-node"></div>
+        <div class="t-period">2026 — Berjalan</div>
+        <div class="t-title">Kerja Praktik — Bagian Operator</div>
+        <div class="t-org">PT PLN Nusantara Power, Unit Pembangkit Brantas (PLTA Wlingi, Blitar)</div>
+        <div class="t-desc">Terlibat dalam inspeksi rutin peralatan pembangkit dan pekerjaan pada panel listrik, mengamati langsung operasi unit pembangkit listrik tenaga air skala industri.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-node"></div>
+        <div class="t-period">2025 — 2026</div>
+        <div class="t-title">Tugas Akhir — Kincir Air Tenaga Surya + IoT Water Quality Monitoring</div>
+        <div class="t-org">Politeknik Elektronika Negeri Surabaya</div>
+        <div class="t-desc">Merancang sistem kincir air bertenaga surya untuk kolam budidaya ikan dengan pemantauan DO, pH, dan suhu secara real-time menggunakan STM32, Blynk, dan loop kontrol PI. Berhasil mempertahankan seminar proposal.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-node"></div>
+        <div class="t-period">2024 — Sekarang</div>
+        <div class="t-title">D3 Teknik Elektro Industri</div>
+        <div class="t-org">Politeknik Elektronika Negeri Surabaya (PENS)</div>
+        <div class="t-desc">Menempuh mata kuliah inti sistem tenaga, elektronika daya, dan sistem tertanam, sembari aktif mengerjakan proyek praktik di luar kelas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Proyek Terpilih</span>
+      <span class="sec-sub">4 DITAMPILKAN</span>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-tag">Tugas Akhir</div>
+        <div class="proj-name">Kincir Air Tenaga Surya + Pemantauan Kualitas Air IoT</div>
+        <div class="proj-desc">Sistem kincir air untuk kolam budidaya ikan yang dijalankan tenaga surya, dengan sensor DO/pH/suhu dan kontrol PI agar kualitas air tetap stabil.</div>
+        <div class="proj-stack"><span class="chip">STM32</span><span class="chip">Blynk</span><span class="chip">Kontrol PI</span><span class="chip">IoT</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-tag">Elektronika Daya</div>
+        <div class="proj-name">Buck Converter dengan Kontrol PI/STR-PID</div>
+        <div class="proj-desc">Perancangan skematik dan PCB konverter buck, dengan simulasi kendali untuk menjaga tegangan output tetap stabil pada beban berubah-ubah.</div>
+        <div class="proj-stack"><span class="chip">Eagle PCB</span><span class="chip">PI/PID</span><span class="chip">STM32F103</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-tag">Sistem Tertanam</div>
+        <div class="proj-name">KWH Meter Digital Berbasis ACS712</div>
+        <div class="proj-desc">Alat ukur konsumsi daya real-time yang membaca arus lewat sensor ACS712 dan mengonversinya menjadi estimasi biaya listrik.</div>
+        <div class="proj-stack"><span class="chip">STM32</span><span class="chip">ACS712</span><span class="chip">C/C++</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-tag">Sistem Tenaga</div>
+        <div class="proj-name">Simulasi Transmisi &amp; Distribusi Daya</div>
+        <div class="proj-desc">Eksperimen aliran daya dan analisis jaringan distribusi menggunakan perangkat lunak simulasi sistem tenaga standar industri.</div>
+        <div class="proj-stack"><span class="chip">ETAP</span><span class="chip">MATLAB/Simulink</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">Kompetensi</span>
+      <span class="sec-sub">TOOLSET</span>
+    </div>
+    <div class="skill-cols">
+      <div class="skill-group">
+        <div class="g-title">Sistem Tertanam</div>
+        <ul>
+          <li>STM32 (C/C++) <span class="lvl">PWM · sensor</span></li>
+          <li>Kontrol PI / PID <span class="lvl">loop tertutup</span></li>
+          <li>Blynk IoT <span class="lvl">monitoring</span></li>
+          <li>Proteus <span class="lvl">simulasi rangkaian</span></li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="g-title">Sistem Tenaga</div>
+        <ul>
+          <li>ETAP <span class="lvl">aliran daya</span></li>
+          <li>MATLAB/Simulink <span class="lvl">simulasi</span></li>
+          <li>Elektronika daya <span class="lvl">buck converter</span></li>
+          <li>Eagle PCB <span class="lvl">skematik</span></li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="g-title">Praktik Lapangan</div>
+        <ul>
+          <li>Inspeksi peralatan pembangkit</li>
+          <li>Pekerjaan panel listrik</li>
+          <li>K3 kelistrikan dasar</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="g-title">Cara Kerja</div>
+        <ul>
+          <li>Dokumentasi teknis rapi</li>
+          <li>Terbiasa kerja lintas tim</li>
+          <li>Detail-oriented pada data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title">Kontak</span>
+    </div>
+    <div class="contact-box">
+      <div>
+        <h2>Terbuka untuk diskusi kerja praktik, magang, atau kolaborasi proyek.</h2>
+        <p>Balasan biasanya dalam 1–2 hari kerja. Silakan hubungi lewat salah satu kanal berikut.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:dyahfahmiputri17@gmail.com">dyahfahmiputri17@gmail.com</a>
+        <a href="https://linkedin.com/in/dyahfahmiputri" target="_blank" rel="noopener">linkedin.com/in/dyahfahmiputri</a>
+        <a href="https://github.com/dyfahmi" target="_blank" rel="noopener">github.com/dyfahmi</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 DYAH FAHMI PUTRI</span>
+    <span>PENS — TEKNIK ELEKTRO INDUSTRI</span>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
